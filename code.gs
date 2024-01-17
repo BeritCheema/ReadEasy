@@ -256,7 +256,7 @@ function aiSummarizer() {
   var selectedText = doc.getBody().getText();
   var body = doc.getBody();
 
-  var apiKey = "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";
+  var apiKey = "#####";
 
   var model = "gpt-4"; // intializes the model
   var temperature = 0;
