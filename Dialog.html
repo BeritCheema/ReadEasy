@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <?!= HtmlService.createHtmlOutputFromFile('Stylesheet').getContent(); ?>
+  </head>
+  <body>
+    <form id="alt-text-form" onsubmit="onTextSave(); return false;">
+      <? for (var i = 0; i < imageAlt.length; i++) { ?>
+        <div class="block" id="dialog-elements">
+          <input type="hidden" id="image-url-<?= i ?>">
+          <label for="alt-text-<?= i ?>">
+            Set Image #<?= i + 1 ?> Description
+          </label>
+          <input class="width-100" id="alt-text-<?= i ?>" type="text" value="<?= imageAlt[i] ?>">
+        </div>
+      <? } ?>
+      <div class="block" id="dialog-button-bar">
+        <button type="submit" id="dialog-save-button">Save</button>
+        <button type="button" id="dialog-cancel-button" onclick="google.script.host.close()">Cancel</button>
+      </div>
+      <div id="dialog-status"></div>
+    </form>
+    <?!= HtmlService.createHtmlOutputFromFile('DialogJavaScript').getContent(); ?>
+    <script> 
+    // Submit button functionality
+      function onTextSave() {
+        document.getElementById('dialog-save-button').disabled = true;
+        var altTextData = [];
+        for (var i = 0; i < <?= imageAlt.length ?>; i++) {
+          altTextData.push({
+            altText: document.getElementById('alt-text-' + i).value
+          });
+        }
+
+        console.log(altTextData);
+        // Send the array of alt texts with URLs to the server
+        google.script.run
+            .withSuccessHandler(function(msg) {
+                document.getElementById('dialog-status').innerText = 'Image Descriptions saved.';
+                document.getElementById('dialog-save-button').disabled = false;
+                google.script.host.close();
+            })
+            .withFailureHandler(function(msg) {
+                document.getElementById('dialog-status').innerText = 'Could not save Descriptions: ' + msg;
+                document.getElementById('dialog-save-button').disabled = false;
+            })
+            .setAltText(altTextData);
+      }
+    </script>
+  </body>
+</html>
