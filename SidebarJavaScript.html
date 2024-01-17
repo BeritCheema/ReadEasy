@@ -1,0 +1,267 @@
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+  /**
+   * Run initializations on sidebar load.
+   */
+  $(function() {
+    // Assign handler functions to sidebar elements here, if needed.
+    $('#reformat-document').click(onReformatButtonClick);
+  });
+
+  // Flags to maintain function state
+  var flags = {
+    formatFont: false,
+    underlinesItalics: false,
+    formatHeading: false,
+    documentColors: false,
+    imageAltText: false,
+    summarize: false
+  };
+
+  /**
+   * Calls the server to modify the document.
+   * Master function that checks button toggle condition and performs work.
+   */
+  function onReformatButtonClick() {
+  // Set flags based on the toggles
+  flags.formatFont = $('#toggle-format-font').is(':checked');
+  flags.underlinesItalics = $('#toggle-underlines-italics').is(':checked');
+  flags.formatHeading = $('#toggle-format-headings').is(':checked');
+  flags.documentColors = $('#toggle-document-color').is(':checked');
+  flags.imageAltText = $('#toggle-image-prompt').is(':checked');
+  flags.summarize = $('#toggle-ai-summary').is(':checked');
+  
+  if (!checkAllOperationsComplete()) {
+    document.getElementById('reformat-document').setAttribute('aria-busy', 'true');
+    document.getElementById('reformat-document').disabled = true;
+  }
+
+  if (flags.formatHeading) {
+    autoFormatHeading();
+  }
+  if (flags.formatFont) {
+    autoFormatFont();
+  }
+  if (flags.underlinesItalics) {
+    removeUnderlineItalics();
+  }
+  if (flags.documentColors) {
+    optimizeColors();
+  }
+  if (flags.imageAltText) {
+    imageAltTextCheck() 
+  }
+  if (flags.summarize) {
+    aiSummarize();
+  }
+  };
+
+  /**
+   * Mark a task as complete.
+   */
+  function completeOperation(operation) {
+    flags[operation] = false;
+    checkAllOperationsComplete();
+  }
+
+  /**
+   * Check if all tasks are completed.
+   * If so, return to normal app state.
+   */
+  function checkAllOperationsComplete() {
+    for (var key in flags) {
+      if (flags[key]) {
+        return false; // If any operation is still true, return false
+      }
+    }
+    // All operations are complete
+    var reformatButton = document.getElementById('reformat-document');
+    reformatButton.disabled = false;
+    reformatButton.setAttribute('aria-busy', 'false');
+    return true;
+  }
+
+  /**
+   * Format Document Font
+   */
+  function autoFormatFont() {
+    // Directly set the font to Arial.
+    google.script.run
+      .withSuccessHandler(function(msg, element) {
+        // Respond to success conditions here.
+        console.log("Changed Font Familty and Size");
+        unToggleCheckbox('toggle-format-font'); 
+        completeOperation('formatFont');
+      })
+      .withFailureHandler(function(msg, element) {
+        // Respond to failure conditions here.
+        unToggleCheckbox('toggle-format-font');
+        completeOperation('formatFont');
+      })
+      .withUserObject(this)
+      .setDocumentFontToArial();
+  }
+
+  /**
+   * Replace all underline and italics with bold text.
+   */
+  function removeUnderlineItalics() {
+    google.script.run
+      .withSuccessHandler(function(msg, element) {
+        // Respond to success conditions here.
+        console.log("Removed Underlines/Italics");
+        unToggleCheckbox('toggle-underlines-italics');
+        completeOperation('underlinesItalics');
+      })
+      .withFailureHandler(function(msg, element) {
+        // Respond to failure conditions here.
+        unToggleCheckbox('toggle-underlines-italics');
+        completeOperation('underlinesItalics');
+      })
+      .withUserObject(this)
+      .replaceWithBold();
+  }
+
+  /**
+   * Automatically create headings.
+   */
+  function autoFormatHeading() {
+    google.script.run
+      .withSuccessHandler(function(msg, element) {
+        // Respond to success conditions here.
+        console.log("Formatted Headings");
+        unToggleCheckbox('toggle-format-headings');
+        completeOperation('formatHeading');
+      })
+      .withFailureHandler(function(msg, element) {
+        // Respond to failure conditions here.
+        unToggleCheckbox('toggle-format-headings');
+        completeOperation('formatHeading');
+      })
+      .withUserObject(this)
+      .applyHeadings();
+  }
+
+
+  /**
+   * Change the document colors to have a high contrast
+   * (black on white)
+   */
+  function optimizeColors() {
+    google.script.run
+      .withSuccessHandler(function(msg, element) {
+        // Respond to success conditions here.
+        console.log("Colors Optimized");
+        unToggleCheckbox('toggle-document-color');
+        completeOperation('documentColors');
+      })
+      .withFailureHandler(function(msg, element) {
+        // Respond to failure conditions here.
+        unToggleCheckbox('toggle-document-color');
+        completeOperation('documentColors');
+      })
+      .withUserObject(this)
+      .setDocumentColorsToHighContrast();
+  } 
+
+  /**
+   * Check for image alt tags and prompt the user
+   * when they are found.
+   */
+  function imageAltTextCheck() {
+    google.script.run
+      .withSuccessHandler(function(msg, element) {
+        // Respond to success conditions here.
+        console.log("Images Checked");
+        unToggleCheckbox('toggle-image-prompt');
+        completeOperation('imageAltText');
+      })
+      .withFailureHandler(function(msg, element) {
+        // Respond to failure conditions here.
+        unToggleCheckbox('toggle-image-prompt');
+        completeOperation('imageAltText');
+      })
+      .withUserObject(this)
+      .findImagesAndPrompt();
+  } 
+
+  /**
+   * Use openAI to summarize the content
+   */
+  function aiSummarize() {
+    google.script.run
+      .withSuccessHandler(function(msg, element) {
+        // Respond to success conditions here.
+        console.log("AI Summary function");
+        unToggleCheckbox('toggle-ai-summary');
+        completeOperation('summarize');
+      })
+      .withFailureHandler(function(msg, element) {
+        // Respond to failure conditions here
+        unToggleCheckbox('toggle-ai-summary');
+        completeOperation('summarize');
+      })
+      .withUserObject(this)
+      .aiSummarizer();
+  } 
+
+
+  /**
+   * Finds all the images located in the text
+   */
+  function findImagesInDocument() {
+    var body = DocumentApp.getActiveDocument().getBody();
+    var numElements = body.getNumChildren();
+    var images = [];
+
+    for (var i = 0; i < numElements; i++) {
+      var element = body.getChild(i);
+      // Check if the element is a paragraph
+      if (element.getType() === DocumentApp.ElementType.PARAGRAPH) {
+        var numChildren = element.getNumChildren();
+        // Iterate through all children elements of the paragraph
+        for (var j = 0; j < numChildren; j++) {
+          var child = element.getChild(j);
+          // Check if the child is an InlineImage
+          if (child.getType() === DocumentApp.ElementType.INLINE_IMAGE) {
+            images.push(child);
+            // Optional: Do something with the image, like logging its URL
+            Logger.log(child.getBlob().getContentType());
+            Logger.log(child.getBlob().getBytes().length);
+          }
+        }
+      }
+    }
+
+    Logger.log('Total images found: ' + images.length);
+    return images;
+  }
+
+  /**
+   * Untoggle checkboxes based on ID
+   */
+  function unToggleCheckbox(checkboxId) {
+    var checkbox = document.getElementById(checkboxId);
+    if (checkbox) {
+      checkbox.checked = false;
+    }
+  }
+
+  /**
+   * Change the theme whenever the toggle button is clicked
+   */
+  document.getElementById('theme-toggle-link').addEventListener('click', function(event) {
+  event.preventDefault(); // Prevent default link behavior
+
+  var currentTheme = document.documentElement.getAttribute('data-theme');
+  
+  if (currentTheme === 'dark') {
+    // If current theme is dark, switch to light
+    document.documentElement.setAttribute('data-theme', 'light');
+  } else {
+    // If current theme is light or undefined, switch to dark
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+});
+
+</script>
