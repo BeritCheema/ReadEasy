@@ -1,0 +1,232 @@
+<!-- This CSS package applies Google styling; it should always be included. -->
+<link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+
+
+<style>
+label {
+  font-weight: bold;
+}
+
+button {
+  min-width: 100px;
+}
+
+.width-100 {
+  width: 100%;
+  box-sizing: border-box;
+  -webkit-box-sizing : border-box;‌
+  -moz-box-sizing : border-box;
+}
+
+.table-label {
+  font-weight: bold;
+  width: 25%
+}
+
+
+.branding-below {
+  bottom: 54px;
+  top: 0;
+}
+
+.branding-text {
+  left: 7px;
+  position: relative;
+  top: 3px;
+}
+
+.logo {
+  vertical-align: left;
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: row;
+  vertical-align: center;
+  gap: 10%;
+  padding: 5%;
+  
+}
+
+#dialog-elements {
+  background-color: #eee;
+  border-color: #eee;
+  border-width: 5px;
+  border-style: solid;
+}
+
+#sidebar-button-bar,
+#dialog-button-bar,
+#dialog-elements {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+#dialog-button-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #3E5F8A;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #3E5F8A;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);  
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.sidebar {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 50%;
+}
+
+.toggle-container {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center; /* This centers the children vertically */
+  justify-content: start; /* This aligns children to the start of the container */
+}
+
+.toggle-menu {
+  padding: 10px;
+}
+
+.action:hover {
+  background-color: #357ae8;
+  cursor: pointer;
+}
+
+.toggle-label {
+  font-family: 1rem;
+  margin-left: 15px;
+}
+
+#reformat-document, 
+#dialog-save-button {
+  overflow: visible;
+  height: auto;
+  background: #3E5F8A; /* Original color */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#reformat-document:hover,
+#dialog-save-button:hover {
+  background: #2B3F5C; /* Slightly darker shade for background on hover */
+  color: #FFFFFF; /* White text color on hover */
+}
+
+#dialog-cancel-button {
+  overflow: visible;
+  height: auto;
+  width: 80%;
+  background: #D3D3D3;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.additional-links {
+  text-align: center;
+  padding-top: 54%;
+}
+
+.additional-links a {
+  margin: 0 10px; /* Add horizontal margin to both sides of each link */
+}
+
+[data-theme="light"] .sidebar {
+  background-color: #f9f9f9; /* Light theme color */
+  color: black;
+}
+
+[data-theme="dark"] .sidebar {
+  background-color: #1E1E1E; /* Dark theme color */
+  color: #D4D4D4;
+}
+
+[data-theme="light"] #reformat-document
+{
+  background: #3E5F8A; /* Original color */
+}
+
+[data-theme="light"] #reformat-document:hover {
+  background: #2B3F5C; /* Slightly darker shade for background on hover */
+}
+
+[data-theme="dark"] #reformat-document {
+  background: #702A8C; /* Original color */
+  border-color: #702A8C;
+}
+
+[data-theme="dark"] #reformat-document:hover {
+  background: #521F66; /* Slightly darker shade for background on hover */
+  border-color: #521F66;
+}
+
+[data-theme="dark"] input:checked + .slider {
+  background-color: #702A8C;
+}
+
+[data-theme="dark"] input:focus + .slider {
+  box-shadow: 0 0 1px #702A8C;
+}
+
+</style>
