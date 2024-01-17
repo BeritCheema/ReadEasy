@@ -1,0 +1,44 @@
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+  /**
+   * Run initializations on dialog load.
+   */
+  $(function() {
+    // Assign handler functions to dialog elements here, if needed.
+    $('#alt-text-form').submit(onTextSave);
+
+  });
+
+  /**
+   * Calls the server to modify the document.
+   * Changes the document title to match the dialog text.
+   */
+  function onTextSave() {
+    this.disabled = true;
+
+    // Gather any information that needs to be sent to the server here.
+    
+    var altTexts = [];
+    for (var i = 0; i < imageAlt.length; i++) {
+      altTexts.push(document.getElementById('alt-text-' + i).value);
+    }
+
+    // Send the value to the server and handle the response.
+    google.script.run
+        .withSuccessHandler(
+          function(msg, element) {
+            // Respond to success conditions here.
+            element.disabled = false;
+          })
+        .withFailureHandler(
+          function(msg, element) {
+            // Respond to failure conditions here.
+            element.disabled = false;
+          })
+        .withUserObject(this)
+        .setAltText(altTexts);
+    return false;
+  }
+
+
+</script>
