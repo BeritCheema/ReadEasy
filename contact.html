@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+        
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        
+        h1 {
+            margin-top: 50px;
+            text-align: center;
+            color: #3E5F8A;
+        }
+        
+        form {
+            background: #fff;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #3E5F8A;
+            color: white;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #2B3F5C;
+        }
+        
+        .button {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #3E5F8A;
+            color: white;
+            text-decoration: none;
+            border: none;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .button:hover {
+            background-color: #2B3F5C;
+        }
+
+        .top-right-button {
+            position: absolute;
+            margin-right: 50px;
+            margin-top: 30px;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Contact Us</h1>
+        <form action="https://formspree.io/f/mgegvylp" method="POST">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="_replyto" placeholder="Your Email" required>
+            <textarea name="message" placeholder="Your Message" required></textarea>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+    <!-- Button linking to the FAQ page -->
+    <a href="faq.html" class="button top-right-button">FAQ</a>
+</body>
+</html>
