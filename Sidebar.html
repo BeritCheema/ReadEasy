@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <!-- Use a templated HTML printing scriptlet to import common stylesheet -->
+    <?!= HtmlService.createHtmlOutputFromFile('Stylesheet').getContent(); ?>
+  </head>
+  <body>
+    <!-- Below is the HTML code that defines the sidebar element structure. -->
+    <div class="sidebar branding-below">
+      <p>
+        Enhance Document Accessibility 
+      </p>
+      <div class="toggle-menu">
+        <div class="toggle-container">
+          <label class="switch">
+            <input type="checkbox" id="toggle-format-font">
+            <span class="slider round"></span>
+          </label>
+          <span class="toggle-label">Standardize Font Style</span>
+        </div>
+        <div class="toggle-container">
+          <label class="switch">
+            <input type="checkbox" id="toggle-format-headings">
+            <span class="slider round"></span>
+          </label>
+          <span class="toggle-label">Create Automatic Headings</span>
+        </div>
+        <div class="toggle-container">
+          <label class="switch">
+            <input type="checkbox" id="toggle-underlines-italics">
+            <span class="slider round"></span>
+          </label>
+          <span class="toggle-label">Remove Underlining & Italics</span>
+        </div>
+        <div class="toggle-container">
+          <label class="switch">
+            <input type="checkbox" id="toggle-document-color">
+            <span class="slider round"></span>
+          </label>
+          <span class="toggle-label">Adjust Page Colors</span>
+        </div>
+        <div class="toggle-container">
+          <label class="switch">
+            <input type="checkbox" id="toggle-image-prompt">
+            <span class="slider round"></span>
+          </label>
+          <span class="toggle-label">Add Image Alt Text</span>
+        </div>
+        <div class="toggle-container">
+          <label class="switch">
+            <input type="checkbox" id="toggle-ai-summary">
+            <span class="slider round"></span>
+          </label>
+          <span class="toggle-label">Improve Readability</span>
+        </div>
+      </div>
+      <div id="sidebar-button-bar">
+        <button id="reformat-document">Reformat Document</button>
+      </div>
+      <div class="additional-links">
+        <a href="https://readeasy.w3spaces.com/faq.html" class="secondary" target="_blank">FAQ</a>
+        <a href="https://readeasy.w3spaces.com/contact.html" class="secondary" target="_blank">Contact</a>
+        <a href="#" class="secondary" id="theme-toggle-link">Toggle Dark/Light Theme</a>
+      </div>
+    </div>
+    <div class="logo-container bottom">
+      <img alt="ReadEasy logo" class="logo" width="25"
+          src="https://i.ibb.co/QdLfLRh/EasyRead.png">
+      <span class="gray branding-text">ReadEasy&trade;</span>
+    </div>
+
+    <!-- Use a templated HTML printing scriptlet to import JavaScript -->
+    <?!= HtmlService.createHtmlOutputFromFile('SidebarJavaScript').getContent(); ?>
+  </body>
+</html>
